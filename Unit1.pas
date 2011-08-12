@@ -31,7 +31,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit2;
+  UDataSetIterator;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
