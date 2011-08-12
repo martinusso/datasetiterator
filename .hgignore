@@ -1,0 +1,7 @@
+syntax: glob
+__history
+*.dcu
+*.local
+*.exe
+*.res
+*.drc
