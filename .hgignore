@@ -1,8 +1,0 @@
-syntax: glob
-__history
-*.identcache
-*.dcu
-*.local
-*.exe
-*.res
-*.drc
