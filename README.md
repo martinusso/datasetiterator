@@ -1,0 +1,3 @@
+# datasetiterator
+
+This fork has differences with the original repository, that's hosted on BitBucket at https://bitbucket.org/magnomp/datasetiterator.
