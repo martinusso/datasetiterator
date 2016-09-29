@@ -44,7 +44,7 @@ end;
 
 destructor TDataSetIterator.Destroy;
 begin
-  if FDataSet.BookmarkValid(FBookmark) then
+  if Assigned(FBookmark) and FDataSet.BookmarkValid(FBookmark) then
     FDataSet.Bookmark := FBookmark;
   FDataSet.FreeBookmark(FBookmark);
   FDataSet.EnableControls;
