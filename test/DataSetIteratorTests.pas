@@ -29,9 +29,6 @@ type
 
 implementation
 
-uses
-  SysUtils;
-
 { TDataSetIteratorTests }
 
 procedure TDataSetIteratorTests.ForceRelease;
@@ -64,11 +61,11 @@ end;
 
 procedure TDataSetIteratorTests.TestAfterIteratorShouldReturnToSameRecord;
 begin
-  FDataSet.InsertRecord([1]);
-  FDataSet.InsertRecord([2]);
-  FDataSet.InsertRecord([3]);
-  FDataSet.InsertRecord([4]);
-  FDataSet.InsertRecord([5]);
+  FDataSet.AppendData([1]);
+  FDataSet.AppendData([2]);
+  FDataSet.AppendData([3]);
+  FDataSet.AppendData([4]);
+  FDataSet.AppendData([5]);
 
   FDataSet.Locate('ID', 3, []);
 
@@ -83,9 +80,9 @@ end;
 
 procedure TDataSetIteratorTests.TestNextShouldIterateOverAllRecords;
 begin
-  FDataSet.InsertRecord([1]);
-  FDataSet.InsertRecord([2]);
-  FDataSet.InsertRecord([3]);
+  FDataSet.AppendData([1]);
+  FDataSet.AppendData([2]);
+  FDataSet.AppendData([3]);
 
   FSUT := Iterator(FDataSet);
 
@@ -107,9 +104,9 @@ end;
 
 procedure TDataSetIteratorTests.TestNextShouldReturnFalseWhenLastRecord;
 begin
-  FDataSet.InsertRecord([1]);
-  FDataSet.InsertRecord([2]);
-  FDataSet.InsertRecord([3]);
+  FDataSet.AppendData([1]);
+  FDataSet.AppendData([2]);
+  FDataSet.AppendData([3]);
 
   FSUT := Iterator(FDataSet);
 
@@ -138,9 +135,9 @@ end;
 
 procedure TDataSetIteratorTests.TestShouldGoToFirstRecordOnCreate;
 begin
-  FDataSet.InsertRecord([1]);
-  FDataSet.InsertRecord([2]);
-  FDataSet.InsertRecord([3]);
+  FDataSet.AppendData([1]);
+  FDataSet.AppendData([2]);
+  FDataSet.AppendData([3]);
 
   FSUT := Iterator(FDataSet);
 
