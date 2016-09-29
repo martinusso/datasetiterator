@@ -1,4 +1,4 @@
-unit UDataSetIterator;
+unit DataSetIterator;
 
 interface
 
