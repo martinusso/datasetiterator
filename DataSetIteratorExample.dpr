@@ -3,7 +3,7 @@ program DataSetIteratorExample;
 uses
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  UDataSetIterator in 'UDataSetIterator.pas';
+  DataSetIterator in 'DataSetIterator.pas';
 
 {$R *.res}
 
