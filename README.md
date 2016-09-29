@@ -1,6 +1,6 @@
 # datasetiterator
 
-This fork has differences with the original repository, that's hosted on BitBucket at https://bitbucket.org/magnomp/datasetiterator. DataSetIterator.pas was originally developed by [Magno Machado](https://github.com/magnomp).
+This fork has differences with the original repository, that's hosted on BitBucket at https://bitbucket.org/magnomp/datasetiterator.
 
 ## Using
 
@@ -21,3 +21,7 @@ begin
 
   ShowMessage(Format('The sum is %d.', [Sum]));
 ```
+
+## Author
+
+DataSetIterator.pas was originally developed by [Magno Machado](https://github.com/magnomp).
