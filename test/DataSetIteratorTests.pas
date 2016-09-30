@@ -11,9 +11,8 @@ uses
 type
   TDataSetIteratorTests = class(TTestCase)
   private
-    FSUT: IDataSetIterator;
     FDataSet: TClientDataSet;
-    procedure ForceRelease;
+    procedure NewIterator;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -31,15 +30,13 @@ implementation
 
 { TDataSetIteratorTests }
 
-procedure TDataSetIteratorTests.ForceRelease;
+procedure TDataSetIteratorTests.NewIterator;
 var
-  P: Pointer;
+  SUT: IDataSetIterator;
 begin
-  { TODO : find another way to release the interface }
-  P := Pointer(FSUT);
-  IDataSetIterator(P)._Release;
-  FSUT := nil;
-  P := nil;
+  SUT := Iterator(FDataSet);
+  while SUT.Next do
+    Continue;
 end;
 
 procedure TDataSetIteratorTests.SetUp;
@@ -60,86 +57,90 @@ begin
 end;
 
 procedure TDataSetIteratorTests.TestAfterIteratorShouldReturnToSameRecord;
+var
+  SUT: IDataSetIterator;
 begin
-  FDataSet.AppendData([1]);
-  FDataSet.AppendData([2]);
-  FDataSet.AppendData([3]);
-  FDataSet.AppendData([4]);
-  FDataSet.AppendData([5]);
+  FDataSet.InsertRecord([1]);
+  FDataSet.InsertRecord([2]);
+  FDataSet.InsertRecord([3]);
+  FDataSet.InsertRecord([4]);
+  FDataSet.InsertRecord([5]);
 
   FDataSet.Locate('ID', 3, []);
 
-  FSUT := Iterator(FDataSet);
-  while FSUT.Next do
-    Continue;
-
-  ForceRelease;
+  NewIterator;
 
   CheckEquals(3, FDataSet.FieldByName('ID').Value);
 end;
 
 procedure TDataSetIteratorTests.TestNextShouldIterateOverAllRecords;
+var
+  SUT: IDataSetIterator;
 begin
-  FDataSet.AppendData([1]);
-  FDataSet.AppendData([2]);
-  FDataSet.AppendData([3]);
+  FDataSet.InsertRecord([1]);
+  FDataSet.InsertRecord([2]);
+  FDataSet.InsertRecord([3]);
 
-  FSUT := Iterator(FDataSet);
+  SUT := Iterator(FDataSet);
 
   CheckEquals(1, FDataSet.FieldByName('ID').Value, 'Should be Id 1 before first next');
-  FSUT.Next;
+  SUT.Next;
   CheckEquals(1, FDataSet.FieldByName('ID').Value, 'Should be Id 1');
-  FSUT.Next;
+  SUT.Next;
   CheckEquals(2, FDataSet.FieldByName('ID').Value, 'Should be Id 2');
-  FSUT.Next;
+  SUT.Next;
   CheckEquals(3, FDataSet.FieldByName('ID').Value, 'Should be Id 3');
 end;
 
 procedure TDataSetIteratorTests.TestNextShouldReturnFalseIfDataSetIsEmpty;
+var
+  SUT: IDataSetIterator;
 begin
-  FSUT := Iterator(FDataSet);
+  SUT := Iterator(FDataSet);
 
-  CheckFalse(FSUT.Next, 'Next should return False if DataSet is Empty');
+  CheckFalse(SUT.Next, 'Next should return False if DataSet is Empty');
 end;
 
 procedure TDataSetIteratorTests.TestNextShouldReturnFalseWhenLastRecord;
+var
+  SUT: IDataSetIterator;
 begin
-  FDataSet.AppendData([1]);
-  FDataSet.AppendData([2]);
-  FDataSet.AppendData([3]);
+  FDataSet.InsertRecord([1]);
+  FDataSet.InsertRecord([2]);
+  FDataSet.InsertRecord([3]);
 
-  FSUT := Iterator(FDataSet);
+  SUT := Iterator(FDataSet);
 
-  CheckTrue(FSUT.Next, 'Next should return True when first record');
-  CheckTrue(FSUT.Next, 'Next should return True when second record');
-  CheckTrue(FSUT.Next, 'Next should return True when third record');
-  CheckFalse(FSUT.Next, 'Next should return False when last record');
+  CheckTrue(SUT.Next, 'Next should return True when first record');
+  CheckTrue(SUT.Next, 'Next should return True when second record');
+  CheckTrue(SUT.Next, 'Next should return True when third record');
+  CheckFalse(SUT.Next, 'Next should return False when last record');
 end;
 
 procedure TDataSetIteratorTests.TestShouldDisableControlsInNewIterator;
+var
+  SUT: IDataSetIterator;
 begin
-  FSUT := Iterator(FDataSet);
+  SUT := Iterator(FDataSet);
 
   CheckTrue(FDataSet.ControlsDisabled);
 end;
 
 procedure TDataSetIteratorTests.TestShouldEnableControlsWhenDestroyed;
 begin
-  FSUT := Iterator(FDataSet);
-  FSUT.Next;
-
-  ForceRelease;
-
+  NewIterator;
   CheckFalse(FDataSet.ControlsDisabled);
 end;
 
 procedure TDataSetIteratorTests.TestShouldGoToFirstRecordOnCreate;
+var
+  SUT: IDataSetIterator;
 begin
-  FDataSet.AppendData([1]);
-  FDataSet.AppendData([2]);
-  FDataSet.AppendData([3]);
+  FDataSet.InsertRecord([1]);
+  FDataSet.InsertRecord([2]);
+  FDataSet.InsertRecord([3]);
 
-  FSUT := Iterator(FDataSet);
+  SUT := Iterator(FDataSet);
 
   CheckEquals(1, FDataSet.RecNo);
 end;
