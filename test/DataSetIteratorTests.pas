@@ -12,7 +12,7 @@ type
   TDataSetIteratorTests = class(TTestCase)
   private
     FDataSet: TClientDataSet;
-    procedure NewIterator;
+    procedure NewIteratorAndRun;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -30,7 +30,7 @@ implementation
 
 { TDataSetIteratorTests }
 
-procedure TDataSetIteratorTests.NewIterator;
+procedure TDataSetIteratorTests.NewIteratorAndRun;
 var
   SUT: IDataSetIterator;
 begin
@@ -68,7 +68,7 @@ begin
 
   FDataSet.Locate('ID', 3, []);
 
-  NewIterator;
+  NewIteratorAndRun;
 
   CheckEquals(3, FDataSet.FieldByName('ID').Value);
 end;
@@ -128,7 +128,8 @@ end;
 
 procedure TDataSetIteratorTests.TestShouldEnableControlsWhenDestroyed;
 begin
-  NewIterator;
+  NewIteratorAndRun;
+
   CheckFalse(FDataSet.ControlsDisabled);
 end;
 
