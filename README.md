@@ -22,7 +22,7 @@ begin
 
 ### Motivation
 
-Why the DataSetIterator exists? The code below is a common way to iterate over the Dataset. DataSetIterator does this in a simple, efficient, safe and elegant way.
+Why the DataSetIterator exists? The code below is a common way to iterate over the Dataset. DataSetIterator does this in a simple, efficient and safe way.
 
 ```Delphi
 var
