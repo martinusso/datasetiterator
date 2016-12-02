@@ -8,7 +8,6 @@ uses
 type
   IDataSetIterator = interface
     ['{56F65708-4DD8-4C44-841E-7AE91D66D47F}']
-
     function Next: Boolean;
   end;
 
